@@ -1,7 +1,9 @@
 ﻿using Microsoft.Data.SqlClient;
 using Microsoft.Extensions.Configuration;
+using System.Reflection;
 using System.Text;
 using WinSCP;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
 
 namespace CSVSQLExporter
 {
@@ -11,7 +13,10 @@ namespace CSVSQLExporter
         {
             Console.WriteLine("\nExport SQL Table or View to CSV File");
             Console.WriteLine("=========================================\n");
-            Console.WriteLine("Copyright Robin Wilson");
+
+            string? productVersion = Assembly.GetExecutingAssembly().GetName().Version?.ToString();
+            Console.WriteLine($"Version {productVersion}");
+            Console.WriteLine($"Copyright Robin Wilson");
 
             string configFile = "appsettings.json";
             string? customConfigFile = null;
@@ -60,12 +65,13 @@ namespace CSVSQLExporter
 
             var connectionString = sqlConnection.ConnectionString;
 
+            //Database Connection
+            Console.WriteLine("Connecting to Database\n");
+            await using var connection = new SqlConnection(connectionString);
+            StreamWriter csvFileContents = new StreamWriter(csvFilePath);
+
             try
             {
-                //Database Connection
-                await using var connection = new SqlConnection(connectionString);
-                Console.WriteLine("Connecting to Database\n");
-
                 await connection.OpenAsync();
                 Console.WriteLine($"\nConnected to {sqlConnection.DataSource}");
                 Console.WriteLine($"Loading data from table {databaseTable["TableOrView"]}");
@@ -77,12 +83,10 @@ namespace CSVSQLExporter
                 await using var command = new SqlCommand(sql, connection);
                 await using var reader = await command.ExecuteReaderAsync();
 
-
                 //Save file to CSV
                 Console.WriteLine("Loading Data into CSV\n");
 
                 StringBuilder csvData = new StringBuilder();
-                StreamWriter csvFileContents = new StreamWriter(csvFilePath);
 
                 int rowIndex = 0;
                 while (await reader.ReadAsync())
@@ -104,7 +108,7 @@ namespace CSVSQLExporter
                     
                     for (int i = 0; i < reader.FieldCount; i++)
                     {
-                        string? value = reader[i].ToString();
+                        string? value = reader[i].ToString()?.Trim();
                         if (value != null)
                         {
                             //If field contains " then ensure it is double-quoted
@@ -130,13 +134,21 @@ namespace CSVSQLExporter
                 }
 
                 //Close connection
-                connection.Close();
-                csvFileContents.Write(csvData.ToString());
+                await connection.CloseAsync();
+                await csvFileContents.WriteAsync(csvData.ToString());
                 csvFileContents.Close();
             }
             catch (Exception e)
             {
                 Console.WriteLine(e.ToString());
+
+                if (connection != null)
+                {
+                    await connection.CloseAsync();
+                }
+
+                csvFileContents.Close();
+
                 return 1;
             }
 

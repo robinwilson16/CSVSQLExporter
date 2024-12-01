@@ -3,8 +3,8 @@
   "WorkspaceRootPath": "C:\\Users\\Robin.Wilson.SHCG\\source\\repos\\CSVSQLExporter\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{D8A4C6BA-C2B5-4F9D-AA13-CBC88C98DDB0}|CSVSQLExporter\\CSVSQLExporter.csproj|c:\\users\\robin.wilson.shcg\\source\\repos\\csvsqlexporter\\csvsqlexporter\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{D8A4C6BA-C2B5-4F9D-AA13-CBC88C98DDB0}|CSVSQLExporter\\CSVSQLExporter.csproj|solutionrelative:csvsqlexporter\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{D8A4C6BA-C2B5-4F9D-AA13-CBC88C98DDB0}|CSVSQLExporter\\CSVSQLExporter.csproj|c:\\users\\robin.wilson.shcg\\source\\repos\\csvsqlexporter\\csvsqlexporter\\csvsqlexporter.csproj||{04B8AB82-A572-4FEF-95CE-5222444B6B64}|",
+      "RelativeMoniker": "D:0:0:{D8A4C6BA-C2B5-4F9D-AA13-CBC88C98DDB0}|CSVSQLExporter\\CSVSQLExporter.csproj|solutionrelative:csvsqlexporter\\csvsqlexporter.csproj||{04B8AB82-A572-4FEF-95CE-5222444B6B64}|"
     },
     {
       "AbsoluteMoniker": "D:0:0:{D8A4C6BA-C2B5-4F9D-AA13-CBC88C98DDB0}|CSVSQLExporter\\CSVSQLExporter.csproj|c:\\users\\robin.wilson.shcg\\source\\repos\\csvsqlexporter\\csvsqlexporter\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
@@ -13,6 +13,14 @@
     {
       "AbsoluteMoniker": "D:0:0:{D8A4C6BA-C2B5-4F9D-AA13-CBC88C98DDB0}|CSVSQLExporter\\CSVSQLExporter.csproj|c:\\users\\robin.wilson.shcg\\source\\repos\\csvsqlexporter\\csvsqlexporter\\appsettings2.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
       "RelativeMoniker": "D:0:0:{D8A4C6BA-C2B5-4F9D-AA13-CBC88C98DDB0}|CSVSQLExporter\\CSVSQLExporter.csproj|solutionrelative:csvsqlexporter\\appsettings2.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D8A4C6BA-C2B5-4F9D-AA13-CBC88C98DDB0}|CSVSQLExporter\\CSVSQLExporter.csproj|c:\\users\\robin.wilson.shcg\\source\\repos\\csvsqlexporter\\csvsqlexporter\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D8A4C6BA-C2B5-4F9D-AA13-CBC88C98DDB0}|CSVSQLExporter\\CSVSQLExporter.csproj|solutionrelative:csvsqlexporter\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D8A4C6BA-C2B5-4F9D-AA13-CBC88C98DDB0}|CSVSQLExporter\\CSVSQLExporter.csproj|c:\\users\\robin.wilson.shcg\\source\\repos\\csvsqlexporter\\csvsqlexporter\\appsettings3.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "RelativeMoniker": "D:0:0:{D8A4C6BA-C2B5-4F9D-AA13-CBC88C98DDB0}|CSVSQLExporter\\CSVSQLExporter.csproj|solutionrelative:csvsqlexporter\\appsettings3.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
     }
   ],
   "DocumentGroupContainers": [
@@ -22,8 +30,32 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 2,
+          "SelectedChildIndex": 0,
           "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "CSVSQLExporter",
+              "DocumentMoniker": "C:\\Users\\Robin.Wilson.SHCG\\source\\repos\\CSVSQLExporter\\CSVSQLExporter\\CSVSQLExporter.csproj",
+              "RelativeDocumentMoniker": "CSVSQLExporter\\CSVSQLExporter.csproj",
+              "ToolTip": "C:\\Users\\Robin.Wilson.SHCG\\source\\repos\\CSVSQLExporter\\CSVSQLExporter\\CSVSQLExporter.csproj",
+              "RelativeToolTip": "CSVSQLExporter\\CSVSQLExporter.csproj",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
+              "WhenOpened": "2024-12-01T00:50:11.186Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "appsettings3.json",
+              "DocumentMoniker": "C:\\Users\\Robin.Wilson.SHCG\\source\\repos\\CSVSQLExporter\\CSVSQLExporter\\appsettings3.json",
+              "RelativeDocumentMoniker": "CSVSQLExporter\\appsettings3.json",
+              "ToolTip": "C:\\Users\\Robin.Wilson.SHCG\\source\\repos\\CSVSQLExporter\\CSVSQLExporter\\appsettings3.json",
+              "RelativeToolTip": "CSVSQLExporter\\appsettings3.json",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAACEAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
+              "WhenOpened": "2024-11-30T12:18:17.829Z"
+            },
             {
               "$type": "Document",
               "DocumentIndex": 2,
@@ -32,10 +64,9 @@
               "RelativeDocumentMoniker": "CSVSQLExporter\\appsettings2.json",
               "ToolTip": "C:\\Users\\Robin.Wilson.SHCG\\source\\repos\\CSVSQLExporter\\CSVSQLExporter\\appsettings2.json",
               "RelativeToolTip": "CSVSQLExporter\\appsettings2.json",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAACEAAAABAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
-              "WhenOpened": "2024-11-30T12:18:04.876Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-11-30T12:18:04.876Z"
             },
             {
               "$type": "Document",
@@ -45,23 +76,22 @@
               "RelativeDocumentMoniker": "CSVSQLExporter\\appsettings.json",
               "ToolTip": "C:\\Users\\Robin.Wilson.SHCG\\source\\repos\\CSVSQLExporter\\CSVSQLExporter\\appsettings.json",
               "RelativeToolTip": "CSVSQLExporter\\appsettings.json",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABQAAAAoAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAACEAAAABAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
               "WhenOpened": "2024-11-30T11:54:00.98Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 3,
               "Title": "Program.cs",
               "DocumentMoniker": "C:\\Users\\Robin.Wilson.SHCG\\source\\repos\\CSVSQLExporter\\CSVSQLExporter\\Program.cs",
               "RelativeDocumentMoniker": "CSVSQLExporter\\Program.cs",
               "ToolTip": "C:\\Users\\Robin.Wilson.SHCG\\source\\repos\\CSVSQLExporter\\CSVSQLExporter\\Program.cs",
               "RelativeToolTip": "CSVSQLExporter\\Program.cs",
-              "ViewState": "AgIAAFgAAAAAAAAAAAAgwG0AAABRAAAAAAAAAA==",
+              "ViewState": "AgIAAH8AAAAAAAAAAAAAAJMAAAARAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-11-30T11:51:21.037Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-11-30T11:51:21.037Z"
             }
           ]
         }

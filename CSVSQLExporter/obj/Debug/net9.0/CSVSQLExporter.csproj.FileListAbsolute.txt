@@ -160,3 +160,4 @@ C:\Users\Robin.Wilson.SHCG\source\repos\CSVSQLExporter\CSVSQLExporter\obj\Debug\
 C:\Users\Robin.Wilson.SHCG\source\repos\CSVSQLExporter\CSVSQLExporter\bin\Debug\net9.0\appsettings.json
 C:\Users\Robin.Wilson.SHCG\source\repos\CSVSQLExporter\CSVSQLExporter\bin\Debug\net9.0\appsettings2.json
 C:\Users\Robin.Wilson.SHCG\source\repos\CSVSQLExporter\CSVSQLExporter\bin\Debug\net9.0\appsettings3.json
+C:\Users\Robin.Wilson.SHCG\source\repos\CSVSQLExporter\CSVSQLExporter\obj\Debug\net9.0\CSVSQLExporter.sourcelink.json

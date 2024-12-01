@@ -5,6 +5,17 @@
     <TargetFramework>net9.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
+    <Title>CSV SQL Exporter</Title>
+    <Description>Exports SQL Tables and Views to CSV files and then also optionally uploads them to an FTP site for integrations with cloud systems and provide an easier solution compared with SSIS which will often not work well with large text fields</Description>
+    <Copyright>Robin Wilson</Copyright>
+    <PackageProjectUrl>https://github.com/robinwilson16/CSVSQLExporter</PackageProjectUrl>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+    <RepositoryUrl>https://github.com/robinwilson16/CSVSQLExporter</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <PackageTags>CSV, SQL, SSIS</PackageTags>
+    <AssemblyVersion>1.0.3</AssemblyVersion>
+    <FileVersion>1.0.3</FileVersion>
+    <PackageLicenseExpression> GPL-3.0-or-later</PackageLicenseExpression>
   </PropertyGroup>
 
   <ItemGroup>
@@ -23,6 +34,13 @@
     <Content Include="appsettings3.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="..\README.md">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
   </ItemGroup>
 
   <ItemGroup>
