@@ -1,5 +1,6 @@
 ﻿using Microsoft.Data.SqlClient;
 using Microsoft.Extensions.Configuration;
+using System.Linq;
 using System.Reflection;
 using System.Text;
 using WinSCP;
@@ -100,7 +101,7 @@ namespace CSVSQLExporter
                                 .ToList();
 
                         //Add headers to file data
-                        csvData.Append(string.Join(",", columnNames));
+                        csvData.Append(string.Join(csvFile.GetValue<char>("Delimiter", ','), columnNames));
 
                         //Append Line
                         csvData.AppendLine();
@@ -114,8 +115,16 @@ namespace CSVSQLExporter
                             //If field contains " then ensure it is double-quoted
                             value = value.Replace("\"", "\"\"");
                             
-                            //If field value contains either a comma or a new line character then need to wrap in ""
-                            if (value.Contains(","))
+                            //If field value contains either a comma (or the delimiter from the config file), a double speechmark or a new line character then need to wrap in ""
+                            if (csvFile.GetValue<bool?>("AlwaysWrapInSpeechmarks", false) == true)
+                            {
+                                value = "\"" + value + "\"";
+                            }
+                            else if (value.Contains(csvFile.GetValue<char>("Delimiter", ',')))
+                            {
+                                value = "\"" + value + "\"";
+                            }
+                            else if (value.Contains("\""))
                             {
                                 value = "\"" + value + "\"";
                             }
@@ -124,7 +133,7 @@ namespace CSVSQLExporter
                                 value = "\"" + value + "\"";
                             }
 
-                            csvData.Append(value.Replace(Environment.NewLine, " ") + ",");
+                            csvData.Append(value.Replace(Environment.NewLine, " ") + csvFile.GetValue<char>("Delimiter", ','));
                         }
                     }
                     csvData.Length--; // Remove the last comma

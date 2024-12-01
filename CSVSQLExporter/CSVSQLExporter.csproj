@@ -16,6 +16,8 @@
     <AssemblyVersion>1.0.3</AssemblyVersion>
     <FileVersion>1.0.3</FileVersion>
     <PackageLicenseExpression> GPL-3.0-or-later</PackageLicenseExpression>
+    <PackageIcon>SQLToCSV.png</PackageIcon>
+    <ApplicationIcon>SQLToCSV.ico</ApplicationIcon>
   </PropertyGroup>
 
   <ItemGroup>
@@ -34,10 +36,15 @@
     <Content Include="appsettings3.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="SQLToCSV.ico" />
   </ItemGroup>
 
   <ItemGroup>
     <None Include="..\README.md">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
+    <None Include="G:\My Drive\Dev\Excel Import and Export Tools\SQLToCSV.png">
       <Pack>True</Pack>
       <PackagePath>\</PackagePath>
     </None>
