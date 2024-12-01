@@ -3,7 +3,16 @@
 This tool exports SQL Tables and Views to CSV files and then also optionally uploads them to an FTP site for integrations with cloud systems and provide an easier solution compared with SSIS which will often not work well with large text fields
 
 If you are looking for a tool that works the other way around exporting from CSV into SQL then please see the other project instead:
+
 https://github.com/robinwilson16/CSVSQLImporter
+
+#### Excel Tools
+
+I have also produced Excel tools for importing and exporting which work in the same way as the CSV tools and are available here:
+
+https://github.com/robinwilson16/ExcelSQLImporter
+
+https://github.com/robinwilson16/ExcelSQLExporter
 
 ## Purpose
 
