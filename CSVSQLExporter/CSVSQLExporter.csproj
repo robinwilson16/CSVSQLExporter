@@ -13,8 +13,8 @@
     <RepositoryUrl>https://github.com/robinwilson16/CSVSQLExporter</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
     <PackageTags>CSV, SQL, SSIS</PackageTags>
-    <AssemblyVersion>1.0.3</AssemblyVersion>
-    <FileVersion>1.0.3</FileVersion>
+    <AssemblyVersion>1.0.4</AssemblyVersion>
+    <FileVersion>1.0.4</FileVersion>
     <PackageLicenseExpression> GPL-3.0-or-later</PackageLicenseExpression>
     <PackageIcon>SQLToCSV.png</PackageIcon>
     <ApplicationIcon>SQLToCSV.ico</ApplicationIcon>

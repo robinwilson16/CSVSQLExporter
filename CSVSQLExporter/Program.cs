@@ -1,5 +1,6 @@
 ﻿using Microsoft.Data.SqlClient;
 using Microsoft.Extensions.Configuration;
+using System.Globalization;
 using System.Linq;
 using System.Reflection;
 using System.Text;
@@ -47,6 +48,15 @@ namespace CSVSQLExporter
                 Console.WriteLine("Error: {0}", e);
                 return 1;
             }
+
+            Console.WriteLine($"\nSetting Locale To {config["Locale"]}");
+
+            //Set locale to ensure dates and currency are correct
+            CultureInfo culture = new CultureInfo(config["Locale"] ?? "en-GB");
+            Thread.CurrentThread.CurrentCulture = culture;
+            Thread.CurrentThread.CurrentUICulture = culture;
+            CultureInfo.DefaultThreadCurrentCulture = culture;
+            CultureInfo.DefaultThreadCurrentUICulture = culture;
 
             var databaseConnection = config.GetSection("DatabaseConnection");
             var databaseTable = config.GetSection("DatabaseTable");
