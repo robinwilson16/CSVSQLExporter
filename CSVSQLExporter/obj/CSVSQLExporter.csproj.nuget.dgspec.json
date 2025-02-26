@@ -1,23 +1,23 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Robin.Wilson.SHCG\\source\\repos\\CSVSQLExporter\\CSVSQLExporter\\CSVSQLExporter.csproj": {}
+    "C:\\Users\\robin.wilson\\source\\repos\\CSVSQLExporter\\CSVSQLExporter\\CSVSQLExporter.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Robin.Wilson.SHCG\\source\\repos\\CSVSQLExporter\\CSVSQLExporter\\CSVSQLExporter.csproj": {
+    "C:\\Users\\robin.wilson\\source\\repos\\CSVSQLExporter\\CSVSQLExporter\\CSVSQLExporter.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Robin.Wilson.SHCG\\source\\repos\\CSVSQLExporter\\CSVSQLExporter\\CSVSQLExporter.csproj",
+        "projectUniqueName": "C:\\Users\\robin.wilson\\source\\repos\\CSVSQLExporter\\CSVSQLExporter\\CSVSQLExporter.csproj",
         "projectName": "CSVSQLExporter",
-        "projectPath": "C:\\Users\\Robin.Wilson.SHCG\\source\\repos\\CSVSQLExporter\\CSVSQLExporter\\CSVSQLExporter.csproj",
-        "packagesPath": "C:\\Users\\Robin.Wilson.SHCG\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Robin.Wilson.SHCG\\source\\repos\\CSVSQLExporter\\CSVSQLExporter\\obj\\",
+        "projectPath": "C:\\Users\\robin.wilson\\source\\repos\\CSVSQLExporter\\CSVSQLExporter\\CSVSQLExporter.csproj",
+        "packagesPath": "C:\\Users\\robin.wilson\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\robin.wilson\\source\\repos\\CSVSQLExporter\\CSVSQLExporter\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
         ],
         "configFilePaths": [
-          "C:\\Users\\Robin.Wilson.SHCG\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\robin.wilson\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
@@ -45,7 +45,7 @@
           "auditLevel": "low",
           "auditMode": "direct"
         },
-        "SdkAnalysisLevel": "9.0.100"
+        "SdkAnalysisLevel": "9.0.200"
       },
       "frameworks": {
         "net9.0": {
@@ -53,39 +53,39 @@
           "dependencies": {
             "Microsoft.Data.SqlClient": {
               "target": "Package",
-              "version": "[5.2.2, )"
+              "version": "[6.0.1, )"
             },
             "Microsoft.EntityFrameworkCore": {
               "target": "Package",
-              "version": "[9.0.0, )"
+              "version": "[9.0.2, )"
             },
             "Microsoft.EntityFrameworkCore.Design": {
               "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
               "suppressParent": "All",
               "target": "Package",
-              "version": "[9.0.0, )"
+              "version": "[9.0.2, )"
             },
             "Microsoft.EntityFrameworkCore.SqlServer": {
               "target": "Package",
-              "version": "[9.0.0, )"
+              "version": "[9.0.2, )"
             },
             "Microsoft.EntityFrameworkCore.Tools": {
               "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
               "suppressParent": "All",
               "target": "Package",
-              "version": "[9.0.0, )"
+              "version": "[9.0.2, )"
             },
             "Microsoft.Extensions.Configuration.Binder": {
               "target": "Package",
-              "version": "[9.0.0, )"
+              "version": "[9.0.2, )"
             },
             "Microsoft.Extensions.Configuration.Json": {
               "target": "Package",
-              "version": "[9.0.0, )"
+              "version": "[9.0.2, )"
             },
             "WinSCP": {
               "target": "Package",
-              "version": "[6.3.6, )"
+              "version": "[6.3.7, )"
             }
           },
           "imports": [
@@ -104,7 +104,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.101/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.200/PortableRuntimeIdentifierGraph.json"
         }
       }
     }
