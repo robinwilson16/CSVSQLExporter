@@ -1,5 +1,6 @@
 ﻿using Microsoft.Data.SqlClient;
 using Microsoft.Extensions.Configuration;
+using System.Data;
 using System.Globalization;
 using System.Linq;
 using System.Reflection;
@@ -62,8 +63,6 @@ namespace CSVSQLExporter
             var databaseTable = config.GetSection("DatabaseTable");
             var csvFile = config.GetSection("CSVFile");
             var ftpConnection = config.GetSection("FTPConnection");
-            string[]? filePaths = { @csvFile["Folder"] ?? "", csvFile["FileName"] ?? "" };
-            string csvFilePath = Path.Combine(filePaths);
 
             var sqlConnection = new SqlConnectionStringBuilder
             {
@@ -79,23 +78,63 @@ namespace CSVSQLExporter
             //Database Connection
             Console.WriteLine("Connecting to Database\n");
             await using var connection = new SqlConnection(connectionString);
+            string csvFilePath = "FILE";
             StreamWriter csvFileContents = new StreamWriter(csvFilePath);
+
+            string? columnNameAsFileNameValue = null;
+            int? columnNameAsFileNameIndex = null;
 
             try
             {
                 await connection.OpenAsync();
                 Console.WriteLine($"\nConnected to {sqlConnection.DataSource}");
-                Console.WriteLine($"Loading data from table {databaseTable["TableOrView"]}");
 
-                var sql =
-                    $@"SELECT *
-                    FROM [{databaseTable["Database"]}].[{databaseTable["Schema"]}].[{databaseTable["TableOrView"]}]";
+                string sql = "";
+
+                if (databaseTable["StoredProcedureCommand"]?.Length > 0)
+                {
+                    Console.WriteLine($"Executing Stored Procedure {databaseTable["StoredProcedureCommand"]}");
+
+                    sql = $@"[{databaseTable["Database"]}].[{databaseTable["Schema"]}].[{databaseTable["StoredProcedureCommand"]}]";
+                }
+                else
+                {
+                    Console.WriteLine($"Loading data from table {databaseTable["TableOrView"]}");
+
+                    sql =
+                        $@"SELECT *
+                        FROM [{databaseTable["Database"]}].[{databaseTable["Schema"]}].[{databaseTable["TableOrView"]}]";
+                }
 
                 await using var command = new SqlCommand(sql, connection);
+
+                //If stored procedure specified with parameters then add these
+                if (databaseTable["StoredProcedureCommand"]?.Length > 0)
+                {
+                    command.CommandType = CommandType.StoredProcedure;
+
+                    if (databaseTable["StoredProcedureParam1IntegerName"]?.Length > 0)
+                    {
+                        command.Parameters.AddWithValue("@" + databaseTable["StoredProcedureParam1IntegerName"], SqlDbType.Int).Value = databaseTable["StoredProcedureParam1IntegerValue"];
+                    }
+                    if (databaseTable["StoredProcedureParam2IntegerName"]?.Length > 0)
+                    {
+                        command.Parameters.AddWithValue("@" + databaseTable["StoredProcedureParam2IntegerName"], SqlDbType.Int).Value = databaseTable["StoredProcedureParam2IntegerValue"];
+                    }
+                    if (databaseTable["StoredProcedureParam1StringName"]?.Length > 0)
+                    {
+                        command.Parameters.AddWithValue("@" + databaseTable["StoredProcedureParam1StringName"], SqlDbType.NVarChar).Value = databaseTable["StoredProcedureParam1StringValue"];
+                    }
+                    if (databaseTable["StoredProcedureParam2StringName"]?.Length > 0)
+                    {
+                        command.Parameters.AddWithValue("@" + databaseTable["StoredProcedureParam2StringName"], SqlDbType.NVarChar).Value = databaseTable["StoredProcedureParam2StringValue"];
+                    }
+                }
+
                 await using var reader = await command.ExecuteReaderAsync();
 
                 //Save file to CSV
-                Console.WriteLine("Loading Data into CSV\n");
+                Console.WriteLine("\nLoading Data into CSV");
 
                 StringBuilder csvData = new StringBuilder();
 
@@ -108,7 +147,24 @@ namespace CSVSQLExporter
                         var columnNames = 
                             Enumerable.Range(0, reader.FieldCount)
                                 .Select(reader.GetName)
-                                .ToList();
+                                .ToList();            
+
+                        //Get file name from column if specified and found
+                        for (int cell = 0; cell < reader.FieldCount; cell++)
+                        {
+                            //Get file name from column if specified and found
+                            if (reader.GetName(cell) == csvFile["ColumnNameAsFileName"])
+                            {
+                                columnNameAsFileNameValue = reader.GetString(cell);
+                                columnNameAsFileNameIndex = cell;
+                                Console.WriteLine($"Using Custom File Name from Table Column '{csvFile["ColumnNameAsFileName"]}': {columnNameAsFileNameValue}");
+
+                                if (columnNames.Contains(csvFile["ColumnNameAsFileName"]))
+                                {
+                                    columnNames.Remove(csvFile["ColumnNameAsFileName"]);
+                                }
+                            }
+                        }
 
                         //Add headers to file data
                         csvData.Append(string.Join(csvFile.GetValue<char>("Delimiter", ','), columnNames));
@@ -116,9 +172,15 @@ namespace CSVSQLExporter
                         //Append Line
                         csvData.AppendLine();
                     }
-                    
+
                     for (int i = 0; i < reader.FieldCount; i++)
                     {
+                        //Skip column used for file name
+                        if (i == columnNameAsFileNameIndex)
+                        {
+                            continue;
+                        }
+
                         string? value = reader[i].ToString()?.Trim();
                         if (value != null)
                         {
@@ -154,6 +216,24 @@ namespace CSVSQLExporter
 
                 //Close connection
                 await connection.CloseAsync();
+
+                Console.WriteLine("\nSaving CSV file");
+
+                string[]? filePaths = { @csvFile["Folder"] ?? "", csvFile["FileName"] ?? "" };
+
+                //If column name specified then use this as the file name instead of the one in the config file
+                if (columnNameAsFileNameValue?.Length > 0)
+                {
+                    if (columnNameAsFileNameValue.Substring(columnNameAsFileNameValue.Length - 4) != ".csv")
+                    {
+                        columnNameAsFileNameValue = columnNameAsFileNameValue + ".csv";
+                    }
+                    filePaths = [@csvFile["Folder"] ?? "", columnNameAsFileNameValue ?? ""];
+                }
+
+                csvFilePath = Path.Combine(filePaths);
+                csvFileContents = new StreamWriter(csvFilePath);
+
                 await csvFileContents.WriteAsync(csvData.ToString());
                 csvFileContents.Close();
             }
@@ -227,7 +307,15 @@ namespace CSVSQLExporter
                             break;
                     }
 
+                    Console.WriteLine("\nUploading CSV File");
                     Console.WriteLine($"Uploading File to {sessionOptions.HostName}");
+
+                    string uploadPath = Path.Combine("/", ftpConnection?["FolderPath"] ?? "");
+
+                    if (uploadPath.Substring(uploadPath.Length - 1) != "/")
+                    {
+                        uploadPath = uploadPath + "/";
+                    }
 
                     try
                     {
@@ -245,7 +333,7 @@ namespace CSVSQLExporter
 
                             TransferOperationResult transferResult;
                             transferResult =
-                                session.PutFiles(csvFilePath, "/", false, transferOptions);
+                                session.PutFiles(csvFilePath, uploadPath, false, transferOptions);
 
                             // Throw on any error
                             transferResult.Check();
@@ -257,7 +345,7 @@ namespace CSVSQLExporter
                             }
                         }
 
-                        Console.WriteLine($"File Uploaded to {sessionOptions.HostName}");
+                        Console.WriteLine($"File Uploaded to {sessionOptions.HostName} to {uploadPath + columnNameAsFileNameValue ?? csvFile["FileName"] ?? ""}");
                         return 0;
                     }
                     catch (Exception e)
