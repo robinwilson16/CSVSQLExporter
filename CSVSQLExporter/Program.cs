@@ -1,4 +1,5 @@
-﻿using Microsoft.Data.SqlClient;
+﻿using CSVSQLExporter.Services;
+using Microsoft.Data.SqlClient;
 using Microsoft.Extensions.Configuration;
 using System.Data;
 using System.Globalization;
@@ -6,7 +7,6 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using WinSCP;
-using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
 
 namespace CSVSQLExporter
 {
@@ -14,12 +14,19 @@ namespace CSVSQLExporter
     {
         static async Task<int> Main(string[] args)
         {
-            Console.WriteLine("\nExport SQL Table or View to CSV File");
-            Console.WriteLine("=========================================\n");
+            bool? logToFile = true;
+            bool? outputToScreen = true;
+
+            string? toolName = Assembly.GetExecutingAssembly().GetName().Name;
+            string logFileName = $"{toolName} - {DateTime.Now.ToString("yyyy-MM-dd HH-mm-ss")}.log";
+
+            await LoggingService.Log(toolName, logFileName, logToFile, outputToScreen);
+            await LoggingService.Log("Export SQL Table or View to CSV File", logFileName, logToFile, outputToScreen);
+            await LoggingService.Log("=========================================", logFileName, logToFile, outputToScreen);
 
             string? productVersion = Assembly.GetExecutingAssembly().GetName().Version?.ToString();
-            Console.WriteLine($"Version {productVersion}");
-            Console.WriteLine($"Copyright Robin Wilson");
+            await LoggingService.Log($"\nVersion {productVersion}", logFileName, logToFile, outputToScreen);
+            await LoggingService.Log($"\nCopyright Robin Wilson", logFileName, logToFile, outputToScreen);
 
             string configFile = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "appsettings.json");
             string? customConfigFile = null;
@@ -33,7 +40,7 @@ namespace CSVSQLExporter
                 configFile = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, customConfigFile);
             }
 
-            Console.WriteLine($"\nUsing Config File {configFile}");
+            await LoggingService.Log($"\nUsing Config File {configFile}", logFileName, logToFile, outputToScreen);
 
             var builder = new ConfigurationBuilder()
                 .SetBasePath(Directory.GetCurrentDirectory())
@@ -46,11 +53,11 @@ namespace CSVSQLExporter
             }
             catch (Exception e)
             {
-                Console.WriteLine("Error: {0}", e);
+                await LoggingService.Log($"Error: {e}", logFileName, logToFile, outputToScreen);
                 return 1;
             }
 
-            Console.WriteLine($"\nSetting Locale To {config["Locale"]}");
+            await LoggingService.Log($"\nSetting Locale To {config["Locale"]}", logFileName, logToFile, outputToScreen);
 
             //Set locale to ensure dates and currency are correct
             CultureInfo culture = new CultureInfo(config["Locale"] ?? "en-GB");
@@ -76,7 +83,7 @@ namespace CSVSQLExporter
             var connectionString = sqlConnection.ConnectionString;
 
             //Database Connection
-            Console.WriteLine("Connecting to Database\n");
+            await LoggingService.Log("Connecting to Database\n", logFileName, logToFile, outputToScreen);
             await using var connection = new SqlConnection(connectionString);
             string csvFilePath = "FILE";
             StreamWriter csvFileContents = new StreamWriter(csvFilePath);
@@ -87,19 +94,19 @@ namespace CSVSQLExporter
             try
             {
                 await connection.OpenAsync();
-                Console.WriteLine($"\nConnected to {sqlConnection.DataSource}");
+                await LoggingService.Log($"\nConnected to {sqlConnection.DataSource}", logFileName, logToFile, outputToScreen);
 
                 string sql = "";
 
                 if (databaseTable["StoredProcedureCommand"]?.Length > 0)
                 {
-                    Console.WriteLine($"Executing Stored Procedure {databaseTable["StoredProcedureCommand"]}");
+                    await LoggingService.Log($"Executing Stored Procedure {databaseTable["StoredProcedureCommand"]}", logFileName, logToFile, outputToScreen);
 
                     sql = $@"[{databaseTable["Database"]}].[{databaseTable["Schema"]}].[{databaseTable["StoredProcedureCommand"]}]";
                 }
                 else
                 {
-                    Console.WriteLine($"Loading data from table {databaseTable["TableOrView"]}");
+                    await LoggingService.Log($"Loading data from table {databaseTable["TableOrView"]}", logFileName, logToFile, outputToScreen);
 
                     sql =
                         $@"SELECT *
@@ -134,7 +141,7 @@ namespace CSVSQLExporter
                 await using var reader = await command.ExecuteReaderAsync();
 
                 //Save file to CSV
-                Console.WriteLine("\nLoading Data into CSV");
+                await LoggingService.Log("\nLoading Data into CSV", logFileName, logToFile, outputToScreen);
 
                 StringBuilder csvData = new StringBuilder();
 
@@ -157,7 +164,7 @@ namespace CSVSQLExporter
                             {
                                 columnNameAsFileNameValue = reader.GetString(cell);
                                 columnNameAsFileNameIndex = cell;
-                                Console.WriteLine($"Using Custom File Name from Table Column '{csvFile["ColumnNameAsFileName"]}': {columnNameAsFileNameValue}");
+                                await LoggingService.Log($"Using Custom File Name from Table Column '{csvFile["ColumnNameAsFileName"]}': {columnNameAsFileNameValue}", logFileName, logToFile, outputToScreen);
 
                                 if (columnNames.Contains(csvFile["ColumnNameAsFileName"]))
                                 {
@@ -217,7 +224,7 @@ namespace CSVSQLExporter
                 //Close connection
                 await connection.CloseAsync();
 
-                Console.WriteLine("\nSaving CSV file");
+                await LoggingService.Log("\nSaving CSV file", logFileName, logToFile, outputToScreen);
 
                 string[]? filePaths = { @csvFile["Folder"] ?? "", csvFile["FileName"] ?? "" };
 
@@ -239,7 +246,7 @@ namespace CSVSQLExporter
             }
             catch (Exception e)
             {
-                Console.WriteLine(e.ToString());
+                await LoggingService.Log(e.ToString(), logFileName, logToFile, outputToScreen);
 
                 if (connection != null)
                 {
@@ -307,8 +314,8 @@ namespace CSVSQLExporter
                             break;
                     }
 
-                    Console.WriteLine("\nUploading CSV File");
-                    Console.WriteLine($"Uploading File to {sessionOptions.HostName}");
+                    await LoggingService.Log("\nUploading CSV File", logFileName, logToFile, outputToScreen);
+                    await LoggingService.Log($"Uploading File to {sessionOptions.HostName}", logFileName, logToFile, outputToScreen);
 
                     string uploadPath = Path.Combine("/", ftpConnection?["FolderPath"] ?? "");
 
@@ -341,28 +348,28 @@ namespace CSVSQLExporter
                             // Print results
                             foreach (TransferEventArgs transfer in transferResult.Transfers)
                             {
-                                Console.WriteLine("Upload of {0} succeeded", transfer.FileName);
+                                await LoggingService.Log($"Upload of {transfer.FileName} succeeded", logFileName, logToFile, outputToScreen);
                             }
                         }
 
-                        Console.WriteLine($"File Uploaded to {sessionOptions.HostName} to {uploadPath + columnNameAsFileNameValue ?? csvFile["FileName"] ?? ""}");
+                        await LoggingService.Log($"File Uploaded to {sessionOptions.HostName} to {uploadPath + columnNameAsFileNameValue ?? csvFile["FileName"] ?? ""}", logFileName, logToFile, outputToScreen);
                         return 0;
                     }
                     catch (Exception e)
                     {
-                        Console.WriteLine("Error: {0}", e);
+                        await LoggingService.Log($"Error: {e}", logFileName, logToFile, outputToScreen);
                         return 1;
                     }
                 }
                 else
                 {
-                    Console.WriteLine($"Not Uploading File to FTP as Option in Config is False");
+                    await LoggingService.Log($"Not Uploading File to FTP as Option in Config is False", logFileName, logToFile, outputToScreen);
                     return 0;
                 }
             }
             else
             {
-                Console.WriteLine($"The File at {csvFilePath} Could Not Be Found");
+                await LoggingService.Log($"The File at {csvFilePath} Could Not Be Found", logFileName, logToFile, outputToScreen);
                 return 1;
             }
         }
