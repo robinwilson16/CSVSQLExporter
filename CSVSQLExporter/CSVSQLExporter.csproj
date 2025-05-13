@@ -13,8 +13,8 @@
     <RepositoryUrl>https://github.com/robinwilson16/CSVSQLExporter</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
     <PackageTags>CSV, SQL, SSIS</PackageTags>
-    <AssemblyVersion>1.0.9</AssemblyVersion>
-    <FileVersion>1.0.9</FileVersion>
+    <AssemblyVersion>1.0.10</AssemblyVersion>
+    <FileVersion>1.0.10</FileVersion>
     <PackageLicenseExpression> GPL-3.0-or-later</PackageLicenseExpression>
     <PackageIcon>SQLToCSV.png</PackageIcon>
     <ApplicationIcon>SQLToCSV.ico</ApplicationIcon>
@@ -51,7 +51,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.Data.SqlClient" Version="6.0.1" />
+    <PackageReference Include="Microsoft.Data.SqlClient" Version="6.0.2" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="9.0.4" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="9.0.4">
       <PrivateAssets>all</PrivateAssets>
@@ -64,7 +64,12 @@
     </PackageReference>
     <PackageReference Include="Microsoft.Extensions.Configuration.Binder" Version="9.0.4" />
     <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="9.0.4" />
-    <PackageReference Include="WinSCP" Version="6.5.0" />
+    <PackageReference Include="WinSCP" Version="6.5.1" />
   </ItemGroup>
 
+  <!-- Embed PDB file into .exe for single file publish-->
+  <PropertyGroup>
+    <DebugType>embedded</DebugType>
+  </PropertyGroup>
+  
 </Project>

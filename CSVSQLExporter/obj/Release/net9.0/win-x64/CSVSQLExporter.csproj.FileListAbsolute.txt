@@ -162,7 +162,6 @@ C:\Users\robin.wilson\source\repos\CSVSQLExporter\CSVSQLExporter\bin\Release\net
 C:\Users\robin.wilson\source\repos\CSVSQLExporter\CSVSQLExporter\bin\Release\net9.0\win-x64\CSVSQLExporter.deps.json
 C:\Users\robin.wilson\source\repos\CSVSQLExporter\CSVSQLExporter\bin\Release\net9.0\win-x64\CSVSQLExporter.runtimeconfig.json
 C:\Users\robin.wilson\source\repos\CSVSQLExporter\CSVSQLExporter\bin\Release\net9.0\win-x64\CSVSQLExporter.dll
-C:\Users\robin.wilson\source\repos\CSVSQLExporter\CSVSQLExporter\bin\Release\net9.0\win-x64\CSVSQLExporter.pdb
 C:\Users\robin.wilson\source\repos\CSVSQLExporter\CSVSQLExporter\bin\Release\net9.0\win-x64\Azure.Core.dll
 C:\Users\robin.wilson\source\repos\CSVSQLExporter\CSVSQLExporter\bin\Release\net9.0\win-x64\Azure.Identity.dll
 C:\Users\robin.wilson\source\repos\CSVSQLExporter\CSVSQLExporter\bin\Release\net9.0\win-x64\Humanizer.dll
@@ -311,6 +310,5 @@ C:\Users\robin.wilson\source\repos\CSVSQLExporter\CSVSQLExporter\obj\Release\net
 C:\Users\robin.wilson\source\repos\CSVSQLExporter\CSVSQLExporter\obj\Release\net9.0\win-x64\CSVSQLEx.6B15AA65.Up2Date
 C:\Users\robin.wilson\source\repos\CSVSQLExporter\CSVSQLExporter\obj\Release\net9.0\win-x64\CSVSQLExporter.dll
 C:\Users\robin.wilson\source\repos\CSVSQLExporter\CSVSQLExporter\obj\Release\net9.0\win-x64\refint\CSVSQLExporter.dll
-C:\Users\robin.wilson\source\repos\CSVSQLExporter\CSVSQLExporter\obj\Release\net9.0\win-x64\CSVSQLExporter.pdb
 C:\Users\robin.wilson\source\repos\CSVSQLExporter\CSVSQLExporter\obj\Release\net9.0\win-x64\CSVSQLExporter.genruntimeconfig.cache
 C:\Users\robin.wilson\source\repos\CSVSQLExporter\CSVSQLExporter\obj\Release\net9.0\win-x64\ref\CSVSQLExporter.dll
