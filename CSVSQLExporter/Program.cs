@@ -76,9 +76,17 @@ namespace CSVSQLExporter
                 DataSource = databaseConnection["Server"],
                 UserID = databaseConnection["Username"],
                 Password = databaseConnection["Password"],
+                IntegratedSecurity = databaseConnection.GetValue<bool>("UseWindowsAuth", false),
                 InitialCatalog = databaseConnection["Database"],
                 TrustServerCertificate = true
             };
+
+            //If not using windows auth then need username and password values too
+            if (sqlConnection.IntegratedSecurity == false)
+            {
+                sqlConnection.UserID = databaseConnection["Username"];
+                sqlConnection.Password = databaseConnection["Password"];
+            }
 
             var connectionString = sqlConnection.ConnectionString;
 
